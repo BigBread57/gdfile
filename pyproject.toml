@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "gdfile"
+version = "0.1.0"
+description = "Django app with generate file for django rest framework."
+authors = ["BigBread57"]
+license = "MIT"
+packages = [
+    { include = 'src' },
+]
+
+[build-system]
+requires = [
+  "pip >= 19.3.1",
+  "setuptools >= 42",
+  "setuptools_scm[toml] >= 3.5.0",
+  "setuptools_scm_git_archive >= 1.1",
+  "wheel >= 0.33.6",
+  "flake8 >= 4.0.1",
+  "python-dotenv >= 0.20.0",
+  "typer >= 0.4.1",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.poetry.scripts]
+gdfile = "src.gdfile.main:main"
