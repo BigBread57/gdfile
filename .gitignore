@@ -21,4 +21,5 @@ venv/
 *.env
 .env
 
-src/gdfile/models/
+gdfile/models/
+done/
