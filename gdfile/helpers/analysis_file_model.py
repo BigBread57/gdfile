@@ -18,7 +18,7 @@ class ModelAnalysis(ast.NodeVisitor):
         """Установка параметров и переменных для хранения данных."""
         # название родительского класса от которого наследуются модели
         self.parent_model_class = ['models.Model', 'BaseModel']
-        # если указан CLASS_MODEL, то добавляем классы
+        # если указан PARENT_MODEL_CLASS, то добавляем классы
         if parent_model_class:
             self.parent_model_class.append(*parent_model_class)
         # аттрибуты модели

@@ -17,4 +17,4 @@ class {{AppName}}APIRootView(APIRootView):
 router = ApiRouter()
 
 router.APIRootView = {{AppName}}APIRootView
-router.register('main_1-class', {{MainClass}}ViewSet, '{{main-class}}')
+router.register('main-class', {{MainClass}}ViewSet, '{{main-class}}')

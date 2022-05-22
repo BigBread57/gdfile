@@ -6,8 +6,11 @@ class GenerateInitSerializers(AbstractGenerate, Helper):
 
     def __init__(self, dict_params: dict, path: str, *args, **kwargs) -> None:
         """Инициализируем переменные (параметры для вставки, название файла)."""
+        super().__init__()
         self.params = dict_params
-        self.path = path
+        self.sample = 'sample/example_init_serializer.py'
+        self.done = 'done/api/serializers/__init__.py'
+        self.path = self.generate_path_to_sample(self.sample, path)
 
     def start_generate(self):
         """Проверяем существует ли файл.
@@ -15,7 +18,7 @@ class GenerateInitSerializers(AbstractGenerate, Helper):
         Если нет - создаем. Если да - актуализируем.
         """
         # Открываем конечный файл и проверяем пуст он или нет.
-        f = open('done/api/serializers/__init__.py', 'a+', encoding='utf-8')
+        f = open(self.done, 'a+', encoding='utf-8')
         f.seek(0)
         initial_file = f.read()
         f.close()
@@ -32,9 +35,7 @@ class GenerateInitSerializers(AbstractGenerate, Helper):
         1) В from/import дозаписать клас сериализатора.
         2) В __all__ добавить название класса сериализатора.
         """
-        with open(
-            'done/api/serializers/__init__.py', 'a+', encoding='utf-8',
-        ) as f:
+        with open(self.done, 'a+', encoding='utf-8') as f:
             f.seek(0)
             initial_ser_file = f.read()
             start_position = initial_ser_file.find('__all__ = [')
@@ -58,18 +59,14 @@ class GenerateInitSerializers(AbstractGenerate, Helper):
                     )
                 )
 
-        with open(
-            'done/api/serializers/__init__.py', 'w', encoding='utf-8',
-        ) as f:
+        with open(self.done, 'w', encoding='utf-8') as f:
             f.write(new_initial_ser_file)
 
     def initial_init(self):
         """Первичное добавление информации в __init__."""
         initial_file = self.generate_context(
-            f'{self.path}/sample/example_init_serializer.py',
+            f'{self.path}/{self.sample}',
             self.params,
         )
-        with open(
-            'done/api/serializers/__init__.py', 'w', encoding='utf-8',
-        ) as f:
+        with open(self.done, 'w', encoding='utf-8') as f:
             f.write(initial_file)

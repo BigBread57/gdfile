@@ -6,8 +6,11 @@ class GenerateRouters(AbstractGenerate, Helper):
 
     def __init__(self, dict_params: dict, path: str, *args, **kwargs) -> None:
         """Инициализируем переменные (параметры для вставки, название файла)."""
+        super().__init__()
         self.params = dict_params
-        self.path = path
+        self.sample = 'sample/example_routers.py'
+        self.done = 'done/api/routers.py'
+        self.path = self.generate_path_to_sample(self.sample, path)
 
     def start_generate(self):
         """Проверяем существует ли файл.
@@ -32,7 +35,7 @@ class GenerateRouters(AbstractGenerate, Helper):
         1) В from/import дозаписать клас представления.
         2) Добавить в routers ссылку для доступа.
         """
-        with open('done/api/routers.py', 'a+', encoding='utf-8') as f:
+        with open(self.done, 'a+', encoding='utf-8') as f:
             f.seek(0)
             routers_file = f.read()
             # Ищем в файле место, в котором сформированы импорты из
@@ -68,14 +71,14 @@ class GenerateRouters(AbstractGenerate, Helper):
                         )
                 )
 
-        with open('done/api/routers.py', 'w', encoding='utf-8') as f:
+        with open(self.done, 'w', encoding='utf-8') as f:
             f.write(new_routers_file)
 
     def initial_router(self):
         """Первичное добавление информации в routers."""
         initial_file = self.generate_context(
-            f'{self.path}/sample/example_routers.py', self.params,
+            f'{self.path}/{self.sample}', self.params,
         )
-        with open('done/api/routers.py', 'w', encoding='utf-8') as f:
+        with open(self.done, 'w', encoding='utf-8') as f:
             f.write(initial_file)
 

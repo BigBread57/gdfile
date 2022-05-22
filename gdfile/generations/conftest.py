@@ -5,8 +5,21 @@ class GenerateConftest(AbstractGenerate, Helper):
 
     def __init__(self, dict_params: dict, path: str, *args, **kwargs) -> None:
         """Инициализируем переменные (параметры для вставки, название файла)."""
+        super().__init__()
         self.params = dict_params
-        self.path = path
+        self.sample_factory = 'sample/conftest/conftest_factory.py'
+        self.sample_fixture = 'sample/conftest/conftest_factory.py'
+        self.sample_import = 'sample/conftest/conftest_factory.py'
+        self.done = 'done/tests/conftest.py'
+        self.path_factory = self.generate_path_to_sample(
+            self.sample_factory, path,
+        )
+        self.path_fixture = self.generate_path_to_sample(
+            self.sample_fixture, path,
+        )
+        self.path_import = self.generate_path_to_sample(
+            self.sample_import, path,
+        )
 
     def start_generate(self):
         """Проверяем существует ли файл.
@@ -14,7 +27,7 @@ class GenerateConftest(AbstractGenerate, Helper):
         Если нет - создаем. Если да - актуализируем.
         """
         # Открываем конечный файл и проверяем пуст он или нет.
-        f = open('done/tests/conftest.py', 'a+', encoding='utf-8')
+        f = open(self.done, 'a+', encoding='utf-8')
         f.seek(0)
         initial_file = f.read()
         f.close()
@@ -28,10 +41,7 @@ class GenerateConftest(AbstractGenerate, Helper):
         for key, value in self.params.items():
             # В словаре много ключей, ищем нужные по совпадению.
             if text_file.find(key) > 0:
-                text_file = text_file.replace(
-                    key,
-                    str(value),
-                )
+                text_file = text_file.replace(key, str(value))
         return text_file
 
     def actual_conftest(self):
@@ -43,7 +53,7 @@ class GenerateConftest(AbstractGenerate, Helper):
         2) Создать DjangoModelFactory и зарегистрировать ее
         3) Написать фикстуру на формат вывода
         """
-        with open('done/tests/conftest.py', 'a+', encoding='utf-8') as f:
+        with open(self.done, 'a+', encoding='utf-8') as f:
             f.seek(0)
             conftest_file = f.read()
             # Ищем в файле место, в котором осуществлена
@@ -64,12 +74,12 @@ class GenerateConftest(AbstractGenerate, Helper):
                     self.conftest_fixture()
                 )
 
-        with open('done/tests/conftest.py', 'w', encoding='utf-8') as f:
+        with open(self.done, 'w', encoding='utf-8') as f:
             f.write(new_conftest_file)
 
     def initial_conftest(self):
         """Первичное добавление импортов в файл, фабрики и фикстур."""
-        with open('done/tests/conftest.py', 'w', encoding='utf-8') as f:
+        with open(self.done, 'w', encoding='utf-8') as f:
             f.write(
                 self.conftest_import() +
                 self.conftest_factory() +
@@ -79,7 +89,7 @@ class GenerateConftest(AbstractGenerate, Helper):
     def conftest_factory(self):
         """Возвращает часть conftest файла, отвечающего за фабрики."""
         with open(
-            f'{self.path}/sample/conftest/conftest_factory.py', 'r', encoding='utf-8',
+            f'{self.path_factory}/{self.sample_factory}', 'r', encoding='utf-8',
         ) as f:
             conftest_factory_file = f.read()
             main_class_underline = self.params.get('{{main_class}}')
@@ -104,7 +114,7 @@ class GenerateConftest(AbstractGenerate, Helper):
     def conftest_fixture(self):
         """Возвращает часть conftest файла, отвечающего за фикстуры."""
         with open(
-            f'{self.path}/sample/conftest/conftest_fixture.py', 'r', encoding='utf-8',
+            f'{self.path_fixture}/{self.sample_fixture}', 'r', encoding='utf-8',
         ) as f:
             conftest_fixture = f.read()
             # Получаем из словаря название класса.
@@ -137,7 +147,7 @@ class GenerateConftest(AbstractGenerate, Helper):
     def conftest_import(self):
         """Возвращает часть conftest файла, отвечающего за импорты."""
         with open(
-            f'{self.path}/sample/conftest/conftest_import.py', 'r', encoding='utf-8',
+            f'{self.path_import}/{self.sample_import}', 'r', encoding='utf-8',
         ) as f:
             
             conftest_import = f.read()

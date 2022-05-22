@@ -85,6 +85,8 @@ class Helper(object):
     """Класс содержит функции, которые помогают генерировать django файлы."""
 
     def __init__(self, *args, **kwargs):
+        # model_field берет информацию из GDFILE_MODEL_FIELD.
+        # Типы полей могут использоваться из сторонних библиотек.
         self.model_field = kwargs.get('model_field')
 
         # Ключ данной переменной это тип поля для моделей.
@@ -176,8 +178,25 @@ class Helper(object):
 
 
 class AbstractGenerate(object):
-    """Абстрактный класс, для классов генерирующих файлы"""
+    """Класс, для классов генерирующих файлы"""
 
     @abstractmethod
     def start_generate(self) -> None:
         """Генерирует файл с нужными данными или содержит порядок действия."""
+
+    @classmethod
+    def generate_path_to_sample(cls, path_to_sample: str, path: str) -> str:
+        """Генерируем путь до шаблонов.
+
+        :param path_to_sample: путь до шаблона из текущего каталога.
+        :param path: путь до текущего каталога.
+        :return: возвращает путь либо до стандартных шаблонов, либо
+        до переопределенных.
+        """
+        is_path = os.path.exists(
+            os.path.join(os.getcwd(), path_to_sample),
+        )
+        if is_path:
+            return os.getcwd()
+        else:
+            return path
