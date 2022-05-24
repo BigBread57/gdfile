@@ -81,4 +81,3 @@ class GenerateRouters(AbstractGenerate, Helper):
         )
         with open(self.done, 'w', encoding='utf-8') as f:
             f.write(initial_file)
-

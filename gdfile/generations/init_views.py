@@ -12,7 +12,6 @@ class GenerateInitViews(AbstractGenerate, Helper):
         self.done = 'done/api/views/__init__.py'
         self.path = self.generate_path_to_sample(self.sample, path)
 
-
     def start_generate(self):
         """Проверяем существует ли файл.
 

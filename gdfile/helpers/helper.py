@@ -71,11 +71,11 @@ def generate_type_field_for_django(model_field: str) -> dict:
             list_elements = element.strip().split(',')
             type_fields_django.update(
                 {
-                    list_elements[0]:  # django
+                    list_elements[0]:
                         (
-                            add_change_me(list_elements[1]),  # serializer
-                            add_change_me(list_elements[2], test=True)  # test
-                        ),
+                            add_change_me(list_elements[1]),
+                            add_change_me(list_elements[2], test=True),
+                        )
                 },
             )
     return type_fields_django

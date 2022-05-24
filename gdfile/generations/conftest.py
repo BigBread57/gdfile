@@ -109,8 +109,8 @@ class GenerateConftest(AbstractGenerate, Helper):
                 factory_fields += factory_field
             factory_fields += f'\n\nregister({main_class_camel}Factory)\n\n\n'
 
-            return self.formatted_file(conftest_factory_file) + factory_fields
-        
+        return self.formatted_file(conftest_factory_file) + factory_fields
+
     def conftest_fixture(self):
         """Возвращает часть conftest файла, отвечающего за фикстуры."""
         with open(
@@ -142,13 +142,13 @@ class GenerateConftest(AbstractGenerate, Helper):
                     )
             )
 
-            return self.formatted_file(conftest_fixture) + fixture_fields
-            
+        return self.formatted_file(conftest_fixture) + fixture_fields
+
     def conftest_import(self):
         """Возвращает часть conftest файла, отвечающего за импорты."""
         with open(
             f'{self.path_import}/{self.sample_import}', 'r', encoding='utf-8',
         ) as f:
-            
+
             conftest_import = f.read()
-            return self.formatted_file(conftest_import)
+        return self.formatted_file(conftest_import)

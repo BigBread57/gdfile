@@ -57,6 +57,7 @@ def main():
         '-pmc',
         '--parent-model-class',
         type=str,
+        default='',
         help='Названия родительских классов моделей. Пример:  BaseModel, ' +
              'MPTTModel и др. Доступны разделители \';\' и \',\'.'
     )
@@ -64,6 +65,7 @@ def main():
         '-mf',
         '--model_fields',
         type=str,
+        default='',
         help='Поля в моделях могут быть из сторонних пакетов. Для их ' +
              'корректного анализа необходимо указать информацию о них.' +
              'Необходимо указать тип поля в модели, тип поля в сериализаторе ' +
@@ -115,7 +117,10 @@ def main():
             )
         if args.get('model_field') is None:
             args.update(
-                {'model_field': os.environ.get('GDFILE_MODEL_FIELD')},
+                {
+                    'model_field':
+                        os.environ.get('GDFILE_MODEL_FIELD'),
+                },
             )
         args.update({'rules': os.environ.get('GDFILE_RULES')})
 
@@ -168,6 +173,9 @@ def gdfile(args=None, **kwargs):
     )
     # Считываем все файлы из папки models и начинаем их анализ.
     for filename in os.listdir(path_to_models):
+        # проверяем только файлы с расширением .py
+        if filename.find('.py') < 0:
+            continue
         with open(os.path.join(path_to_models, filename), 'r') as f:
             all_params = preparation.start_analysis(
                 f.read(),

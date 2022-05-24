@@ -2,7 +2,7 @@
 name = "gdfile"
 version = "0.1.0"
 description = "Django app with generate file for django rest framework."
-authors = ["BigBread57"]
+authors = ["Gleb Mazur <mazur.gleb2010@yandex.ru>"]
 license = "MIT"
 packages = [
     { include = 'gdfile' },
@@ -15,8 +15,8 @@ python-dotenv = "^0.20.0"
 
 [build-system]
 requires = [
-  "python-dotenv >= 0.20.0",
-  "poetry_core>=1.0.0",
+  "python-dotenv>=0.20.0",
+  "poetry-core>=1.0.0",
 ]
 build-backend = "poetry.core.masonry.api"
 

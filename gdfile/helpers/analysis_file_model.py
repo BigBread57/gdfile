@@ -1,5 +1,4 @@
 import ast
-import os
 from _ast import Assign, Attribute, Call, Constant, Expr, Name
 
 from gdfile.helpers.helper import Helper
