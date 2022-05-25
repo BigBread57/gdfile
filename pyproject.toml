@@ -1,15 +1,17 @@
 [tool.poetry]
 name = "gdfile"
-version = "0.1.0"
+version = "0.1.2"
 description = "Django app with generate file for django rest framework."
 authors = ["Gleb Mazur <mazur.gleb2010@yandex.ru>"]
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/BigBread57/gdfile"
 packages = [
     { include = 'gdfile' },
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4"
+python = ">=3.7,<4"
 poetry-core = "^1.0.8"
 python-dotenv = "^0.20.0"
 

@@ -65,9 +65,9 @@ class GenerateRouters(AbstractGenerate, Helper):
                             main_class=self.params.get('{{MainClass}}'),
                         ) +
                         routers_file[end_position:-1] + '\n' +
-                        "router.register('{app_name}', {main_class}ViewSet, '{app_name}')\n".format(  # noqa: E501
-                            app_name=self.params.get('{{app-name}}'),
-                            main_class=self.params.get('{{MainClass}}'),
+                        "router.register('{main_class}s', {main_class_vs}ViewSet, '{main_class}s')\n".format(  # noqa: E501
+                            main_class=self.params.get('{{main-class}}'),
+                            main_class_vs=self.params.get('{{MainClass}}'),
                         )
                 )
 
