@@ -194,6 +194,14 @@ def gdfile(args=None, **kwargs):
                     generate_sample.start_with_rules()
                 generate_sample.start_without_rules()
             continue
+
+    if not os.path.exists(os.path.join(os.getcwd(), 'done')):
+        print(
+            'Не удалось найти файлы моделей в папке: ' +
+            '{0}. '.format(args.get('path_to_models')) +
+            'Проверьте корректность переданного пути.'
+        )
+        sys.exit()
     print(
         'Генерация закончена, поздравляю! Сгенерированные файлы находятся ' +
         'в папке done, в каталоге из которого вызвана команда gdfile.'
